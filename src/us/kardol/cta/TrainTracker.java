@@ -24,12 +24,11 @@ import java.util.logging.Logger;
  */
 
 public class TrainTracker {
-    private Integer mapId, stopId, maxResults, routeCode, runNumber;
-    private String key, stringUrl;
+    private Integer mapId, stopId, maxResults, runNumber;
+    private String key, stringUrl, routeCode;
     
     
     public String getArrivals(){
-        String xmlResponse = null;
         this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?";
         this.stringUrl = builtUrl();
 
@@ -45,6 +44,17 @@ public class TrainTracker {
         this.stringUrl = builtUrl();
         
         if(this.runNumber == null){
+            throw new IllegalStateException();
+        }
+        
+        return this.getResponse(this.stringUrl);
+    }
+    
+    public String getLocations(){
+        this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?";
+        this.stringUrl = builtUrl();
+        
+        if(this.routeCode == null){
             throw new IllegalStateException();
         }
         
@@ -85,7 +95,7 @@ public class TrainTracker {
     public void setKey(String key){
         this.key = key;
     }
-    public void setRouteCode(Integer code){
+    public void setRouteCode(String code){
         this.routeCode = code;
     }
     public Integer getMapId(){
@@ -103,7 +113,7 @@ public class TrainTracker {
     public String getStringUrl(){
         return this.stringUrl;
     }
-    public Integer getRouteCode(){
+    public String getRouteCode(){
         return this.routeCode;
     }
     public Integer getRunNumber(){

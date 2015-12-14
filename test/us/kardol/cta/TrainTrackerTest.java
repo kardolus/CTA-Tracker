@@ -72,5 +72,21 @@ public class TrainTrackerTest {
         System.out.println(" ok");
     }
  
-   
+    @Test
+    public void testGetLocations() {
+        TrainTracker tt = new TrainTracker();
+        tt.setKey("a8456dcbhf8475683cf7818bca81"); // From CTA docs
+        tt.setRouteCode("red");
+  
+        String result = tt.getLocations();
+ 
+        System.out.print("Test 5...");
+        assert(result.contains("Invalid API key")) : "Example key should not be valid";
+        System.out.println(" ok");
+        
+        System.out.print("Test 6...");
+        assertEquals("http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?key=a8456dcbhf8475683cf7818bca81&rt=red", 
+                tt.getStringUrl());
+        System.out.println(" ok");
+    }
 }
