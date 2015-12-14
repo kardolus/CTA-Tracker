@@ -22,20 +22,40 @@ import java.util.logging.Logger;
  * http://www.transitchicago.com/developers/ttdocs/default.aspx
  * 
  */
+
 public class TrainTracker {
-    private Integer mapId, stopId, maxResults, routeCode;
+    private Integer mapId, stopId, maxResults, routeCode, runNumber;
     private String key, stringUrl;
+    
     
     public String getArrivals(){
         String xmlResponse = null;
+        this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?";
         this.stringUrl = builtUrl();
 
         if(this.stopId == null && this.mapId == null){
             throw new IllegalStateException();
         }
         
+        return this.getResponse(this.stringUrl);
+    }
+    
+    public String followThisTrain(){
+        this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?";
+        this.stringUrl = builtUrl();
+        
+        if(this.runNumber == null){
+            throw new IllegalStateException();
+        }
+        
+        return this.getResponse(this.stringUrl);
+    }
+    
+    private String getResponse(String myUrl){
+        String xmlResponse = "";
+
         try {
-            URL url = new URL(stringUrl);
+            URL url = new URL(myUrl);
             URLConnection conn = url.openConnection();
             conn.setDoInput(true);
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -47,11 +67,13 @@ public class TrainTracker {
         } catch (IOException ex) {
             Logger.getLogger(TrainTracker.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return xmlResponse;
     }
     
-        public void setMapId(Integer id){
+    public void setRunNumber(Integer runMumber){
+        this.runNumber = runMumber;
+    }
+    public void setMapId(Integer id){
         this.mapId = id;
     }
     public void setStopId(Integer id){
@@ -84,14 +106,16 @@ public class TrainTracker {
     public Integer getRouteCode(){
         return this.routeCode;
     }
+    public Integer getRunNumber(){
+        return this.runNumber;
+    }
     
     private String builtUrl(){
-        String finalUrl = "http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?";
         if (this.key == null){
             throw new IllegalStateException();
         }
         
-        return finalUrl += canonicalize();
+        return this.stringUrl += canonicalize();
     }
     
     private String canonicalize(){
@@ -110,6 +134,9 @@ public class TrainTracker {
         }
         if(this.maxResults != null){
             params.put("max", this.maxResults.toString());
+        }
+        if(this.runNumber != null){
+            params.put("runnumber", this.runNumber.toString());
         }
         if(this.routeCode != null){
             params.put("rt", this.routeCode.toString());

@@ -41,6 +41,7 @@ public class TrainTrackerTest {
         tt.setKey("a8456dcbhf8475683cf7818bca81"); // From CTA docs
         tt.setMapId(40380);
         tt.setMaxResults(5);
+  
         String result = tt.getArrivals();
         
         System.out.print("Test 1...");
@@ -53,4 +54,23 @@ public class TrainTrackerTest {
         System.out.println(" ok");
     }
     
+    @Test
+    public void testFollowThisTrain() {
+        TrainTracker tt = new TrainTracker();
+        tt.setKey("a8456dcbhf8475683cf7818bca81"); // From CTA docs
+        tt.setRunNumber(426);
+  
+        String result = tt.followThisTrain();
+ 
+        System.out.print("Test 3...");
+        assert(result.contains("Invalid API key")) : "Example key should not be valid";
+        System.out.println(" ok");
+        
+        System.out.print("Test 4...");
+        assertEquals("http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=a8456dcbhf8475683cf7818bca81&runnumber=426", 
+                tt.getStringUrl());
+        System.out.println(" ok");
+    }
+ 
+   
 }
