@@ -66,4 +66,33 @@ public class BusTrackerTest {
                 bt.getStringUrl());
         System.out.println(" ok");
     }
+    
+    @Test
+    public void testGetRoutes() {
+        String result = bt.getRoutes();
+        
+        System.out.print("Test 5...");
+        assert(result.contains("Invalid API access key")) : "Example key should not be valid";
+        System.out.println(" ok");
+        
+        System.out.print("Test 6...");
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getroutes?key=a8456dcbhf8475683cf7818bca81", 
+                bt.getStringUrl());
+        System.out.println(" ok");
+    }
+    
+    @Test
+    public void testGetDirections() {
+        bt.setRouteCode("20");
+        String result = bt.getDirections();
+        
+        System.out.print("Test 7...");
+        assert(result.contains("Invalid API access key")) : "Example key should not be valid";
+        System.out.println(" ok");
+        
+        System.out.print("Test 8...");
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getdirections?key=a8456dcbhf8475683cf7818bca81&rt=20", 
+                bt.getStringUrl());
+        System.out.println(" ok");
+    }
 }

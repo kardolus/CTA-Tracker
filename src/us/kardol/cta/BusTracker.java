@@ -13,10 +13,11 @@ public class BusTracker {
     private Caller caller = new Caller();
     private Utils utils = new Utils();
     
-    /*
-    *  Use the gettime request to retrieve the current system date and time. 
-    *  Since BusTime is a timedependent system, it is important to synchronize 
-    *  your application with BusTime‖s system date and time.
+    /**
+    * Use the gettime request to retrieve the current system date and time. 
+    * Since BusTime is a timedependent system, it is important to synchronize 
+    * your application with BusTime‖s system date and time.
+    * @return xml response from cta
     */
     public String getTime(){
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/gettime?";
@@ -25,17 +26,49 @@ public class BusTracker {
         return caller.getResponse(this.stringUrl);
     }
     
-    /*
-    *  Use the getvehicles request to retrieve vehicle information (i.e., locations) of all or a subset of vehicles
-    *  currently being tracked by BusTime.
+    /**
+    * Use the getvehicles request to retrieve vehicle information 
+    * (i.e., locations) of all or a subset of vehicles
+    * currently being tracked by BusTime.
     *
-    *  Use the vid parameter to retrieve information for one or more vehicles currently being tracked.
-    *  Use the rt parameter to retrieve information for vehicles currently running one or more of the specified
-    *  routes.
+    * Use the vid parameter to retrieve information for one or more vehicles 
+    * currently being tracked.
+    * Use the rt parameter to retrieve information for vehicles currently 
+    * running one or more of the specified routes.
+    * 
+    * @return xml response from cta
     */
     public String getVehicles(){
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getvehicles?";
         this.stringUrl = builtUrl();
+        
+        return caller.getResponse(this.stringUrl);
+    }
+    
+    /**
+    * Use the getroutes request to retrieve the set of routes serviced by the 
+    * system.
+    * @return xml response from cta
+    */
+    public String getRoutes(){
+        this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getroutes?";
+        this.stringUrl = builtUrl();
+        
+        return caller.getResponse(this.stringUrl);
+    }
+    
+    /**
+     * Use the getdirections request to retrieve the set of directions serviced 
+     * by the specified route
+     * @return xml response from cta
+     */
+    public String getDirections(){
+        this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getdirections?";
+        this.stringUrl = builtUrl();
+        
+        if(this.routeCode == null){
+            throw new IllegalStateException();
+        }
         
         return caller.getResponse(this.stringUrl);
     }
