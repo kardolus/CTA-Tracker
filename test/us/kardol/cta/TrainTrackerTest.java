@@ -13,7 +13,7 @@ public class TrainTrackerTest {
     @Before
     public void setUp() {
         tt = new TrainTracker();
-        tt.setKey("Invalid_key");
+        tt.setKey("invalid_key");
     }
 
     @Test
@@ -24,7 +24,7 @@ public class TrainTrackerTest {
         String result = tt.getArrivals();
         
         System.out.print("Test 1...");
-        if(!result.contains("<errCd>101</errCd>")){
+        if(!result.contains("<errCd>101</errCd>")){ // invalid API key
             assert(result.contains("<destNm>")) : "No connection could be made";
         }
         System.out.println(" ok");
@@ -38,13 +38,13 @@ public class TrainTrackerTest {
     
     @Test
     public void testFollowThisTrain() {
-        tt.setRunNumber(426);
+        tt.setRunNumber(1);
   
         String result = tt.followThisTrain();
- 
+        
         System.out.print("Test 3...");
         if(!result.contains("<errCd>101</errCd>")){ // invalid key
-            assert(result.contains("No trains with runnumber 426 were found.")) : "No connection could be made";
+            assert(result.contains("<errCd>501</errCd>")) : "No connection could be made";
         }
         System.out.println(" ok");
         
