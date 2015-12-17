@@ -26,9 +26,7 @@ public class TrainTrackerTest {
         TrainArrival result = tt.getArrivals();
 
         System.out.print("Test 1...");
- 
         assert(result.getErrCd() == 101 || !result.getEta().isEmpty()) : "No connection could be made";
-     
         System.out.println(" ok");
         
         System.out.print("Test 2...");
