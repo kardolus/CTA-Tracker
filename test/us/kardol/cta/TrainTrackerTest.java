@@ -1,5 +1,6 @@
 package us.kardol.cta;
 
+import com.transitchicago.arrivals.TrainArrival;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -21,12 +22,12 @@ public class TrainTrackerTest {
         tt.setMapId(40380);
         tt.setMaxResults(5);
   
-        String result = tt.getArrivals();
-        
+        TrainArrival result = tt.getArrivals();
+
         System.out.print("Test 1...");
-        if(!result.contains("<errCd>101</errCd>")){ // invalid API key
-            assert(result.contains("<destNm>")) : "No connection could be made";
-        }
+ 
+        assert(result.getErrCd() == 101 || !result.getEta().isEmpty()) : "No connection could be made";
+     
         System.out.println(" ok");
         
         System.out.print("Test 2...");

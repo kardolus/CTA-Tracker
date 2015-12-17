@@ -2,6 +2,11 @@ package us.kardol.cta;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
+import com.transitchicago.arrivals.TrainArrival;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 /**
  * @author Guillermo Kardolus
@@ -14,10 +19,13 @@ import java.util.TreeMap;
 public class TrainTracker {
     private Integer mapId, stopId, maxResults, runNumber;
     private String key, stringUrl, routeCode;
-    private Caller caller = new Caller();
+    private Caller caller = new Caller(); 
     private Utils utils = new Utils();
     
-    public String getArrivals(){
+    public TrainArrival getArrivals(){
+        JAXBContext jc;
+        TrainArrival ctatt = null;
+        
         this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?";
         this.stringUrl = builtUrl();
 
@@ -25,7 +33,14 @@ public class TrainTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        try {
+            jc = JAXBContext.newInstance(TrainArrival.class);
+            ctatt = (TrainArrival) jc.createUnmarshaller().unmarshal(caller.getResponse(this.stringUrl));
+        } catch (JAXBException ex) {
+            Logger.getLogger(TrainTracker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ctatt;
     }
     
     public String followThisTrain(){
@@ -36,7 +51,7 @@ public class TrainTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     public String getLocations(){
@@ -47,7 +62,7 @@ public class TrainTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     public void setRunNumber(Integer runMumber){

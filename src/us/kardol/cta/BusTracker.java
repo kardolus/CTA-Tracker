@@ -25,7 +25,7 @@ public class BusTracker {
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/gettime?";
         this.stringUrl = builtUrl();
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -44,7 +44,7 @@ public class BusTracker {
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getvehicles?";
         this.stringUrl = builtUrl();
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -56,7 +56,7 @@ public class BusTracker {
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getroutes?";
         this.stringUrl = builtUrl();
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -72,7 +72,7 @@ public class BusTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -91,7 +91,7 @@ public class BusTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -115,7 +115,7 @@ public class BusTracker {
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getpatterns?";
         this.stringUrl = builtUrl();
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -142,7 +142,7 @@ public class BusTracker {
         this.stringUrl = "http://www.ctabustracker.com/bustime/api/v1/getpredictions?";
         this.stringUrl = builtUrl();
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     /**
@@ -164,7 +164,7 @@ public class BusTracker {
             throw new IllegalStateException();
         }
         
-        return caller.getResponse(this.stringUrl);
+        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
     public void setKey(String key){
