@@ -13,7 +13,7 @@ public class TrainTrackerTest {
     @Before
     public void setUp() {
         tt = new TrainTracker();
-        tt.setKey("Invalid_key"); // From CTA docs
+        tt.setKey("Invalid_key");
     }
 
     @Test
@@ -30,7 +30,7 @@ public class TrainTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 2...");
-        assertEquals("http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=" + tt.getKey() + "&mapid=40380&max=5", 
+        assertEquals("http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=" + tt.getKey() + "&mapid=" + tt.getMapId() + "&max=" + tt.getMaxResults(), 
                 tt.getStringUrl());
         System.out.println(" ok");
     }
@@ -48,7 +48,7 @@ public class TrainTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 4...");
-        assertEquals("http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=" + tt.getKey() + "&runnumber=426", 
+        assertEquals("http://lapi.transitchicago.com/api/1.0/ttfollow.aspx?key=" + tt.getKey() + "&runnumber=" + tt.getRunNumber(), 
                 tt.getStringUrl());
         System.out.println(" ok");
     }
@@ -65,7 +65,7 @@ public class TrainTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 6...");
-        assertEquals("http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?key=" + tt.getKey() + "&rt=red", 
+        assertEquals("http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?key=" + tt.getKey() + "&rt=" + tt.getRouteCode(), 
                 tt.getStringUrl());
         System.out.println(" ok");
     }
