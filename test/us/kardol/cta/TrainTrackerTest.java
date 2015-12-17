@@ -46,7 +46,7 @@ public class TrainTrackerTest {
         String result = tt.followThisTrain();
  
         System.out.print("Test 3...");
-        if(!result.contains("<errCd>101</errCd>")){
+        if(!result.contains("<errCd>101</errCd>")){ // invalid key
             assert(result.contains("No trains with runnumber 426 were found.")) : "No connection could be made";
         }
         System.out.println(" ok");
