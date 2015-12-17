@@ -5,11 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
  * @author Guillermo Kardolus
  */
 public class TrainTrackerTest {
-
     TrainTracker tt;
     
     @Before
@@ -17,9 +15,7 @@ public class TrainTrackerTest {
         tt = new TrainTracker();
         tt.setKey("Invalid_key"); // From CTA docs
     }
-    /**
-     * Test of getArrivals method, of class TrainTracker.
-     */
+
     @Test
     public void testGetArrivals() {
         tt.setMapId(40380);
