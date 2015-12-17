@@ -3,6 +3,7 @@ package us.kardol.cta;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import com.transitchicago.arrivals.TrainArrival;
+import com.transitchicago.locations.TrainLocation;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -54,7 +55,10 @@ public class TrainTracker {
         return utils.inputStreamToString(caller.getResponse(this.stringUrl));
     }
     
-    public String getLocations(){
+    public TrainLocation getLocations(){
+        JAXBContext jc;
+        TrainLocation ctatt = null;
+        
         this.stringUrl = "http://lapi.transitchicago.com/api/1.0/ttpositions.aspx?";
         this.stringUrl = builtUrl();
         
@@ -62,7 +66,14 @@ public class TrainTracker {
             throw new IllegalStateException();
         }
         
-        return utils.inputStreamToString(caller.getResponse(this.stringUrl));
+        try {
+            jc = JAXBContext.newInstance(TrainLocation.class);
+            ctatt = (TrainLocation) jc.createUnmarshaller().unmarshal(caller.getResponse(this.stringUrl));
+        } catch (JAXBException ex) {
+            Logger.getLogger(TrainTracker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ctatt;
     }
     
     public void setRunNumber(Integer runMumber){

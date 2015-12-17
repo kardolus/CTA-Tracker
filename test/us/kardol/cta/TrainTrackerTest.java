@@ -1,6 +1,7 @@
 package us.kardol.cta;
 
 import com.transitchicago.arrivals.TrainArrival;
+import com.transitchicago.locations.TrainLocation;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -59,12 +60,10 @@ public class TrainTrackerTest {
     @Test
     public void testGetLocations() {
         tt.setRouteCode("red");
-        String result = tt.getLocations();
+        TrainLocation result = tt.getLocations();
  
         System.out.print("Test 5...");
-        if(!result.contains("<errCd>101</errCd>")){
-            assert(result.contains("<destNm>")) : "No connection could be made";
-        }
+        assert(result.getErrCd() == 101 || !result.getRoute().isEmpty()) : "No connection could be made";
         System.out.println(" ok");
         
         System.out.print("Test 6...");
