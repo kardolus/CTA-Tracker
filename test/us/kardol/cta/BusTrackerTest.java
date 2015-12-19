@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
  */
 public class BusTrackerTest {
     BusTracker bt;
+    Utils u;
+    
     public BusTrackerTest() {
     }
     
@@ -27,6 +29,7 @@ public class BusTrackerTest {
     @Before
     public void setUp() {
         bt = new BusTracker();
+        u = new Utils();
         bt.setKey("a8456dcbhf8475683cf7818bca81"); // From CTA docs
     }
     
@@ -46,7 +49,7 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 2...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/gettime?key=a8456dcbhf8475683cf7818bca81", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/gettime?key=" + bt.getKey(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -62,7 +65,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 4...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getvehicles?key=a8456dcbhf8475683cf7818bca81&vid=509%2C392", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getvehicles?key=" + bt.getKey() + 
+                "&vid=" + u.encodeRfc3986(bt.getVehicleId()), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -76,8 +80,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 6...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getroutes?key=a8456dcbhf8475683cf7818bca81", 
-                bt.getStringUrl());
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getroutes?key=" + bt.getKey(), 
+                        bt.getStringUrl());
         System.out.println(" ok");
     }
     
@@ -91,7 +95,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 8...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getdirections?key=a8456dcbhf8475683cf7818bca81&rt=20", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getdirections?key=" + bt.getKey() + 
+                        "&rt=" + bt.getRouteCode(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -107,7 +112,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 10...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getstops?dir=East%20Bound&key=a8456dcbhf8475683cf7818bca81&rt=20", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getstops?dir=" + 
+                u.encodeRfc3986(bt.getDirection()) + "&key=" + bt.getKey() + "&rt=" + bt.getRouteCode(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -123,7 +129,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 12...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getpatterns?key=a8456dcbhf8475683cf7818bca81&pid=954&rt=20", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getpatterns?key=" + bt.getKey() + 
+                      "&pid=" + bt.getPatternId() + "&rt=" + bt.getRouteCode(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -139,7 +146,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 14...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getpredictions?key=a8456dcbhf8475683cf7818bca81&rt=20&stpid=456", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getpredictions?key=" + bt.getKey() + 
+                        "&rt=" + bt.getRouteCode() + "&stpid=" + bt.getStopId(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
@@ -154,7 +162,8 @@ public class BusTrackerTest {
         System.out.println(" ok");
         
         System.out.print("Test 16...");
-        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getservicebulletins?key=a8456dcbhf8475683cf7818bca81&stpid=456", 
+        assertEquals("http://www.ctabustracker.com/bustime/api/v1/getservicebulletins?key=" + bt.getKey() + 
+                        "&stpid=" + bt.getStopId(), 
                 bt.getStringUrl());
         System.out.println(" ok");
     }
